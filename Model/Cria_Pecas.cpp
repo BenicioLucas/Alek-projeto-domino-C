@@ -16,6 +16,8 @@ void cria_pecas()
 {
     Peca pecas[28];
     int i = 0;
+    
+    //preenche a array pecas
     for(int l = 0; l < 7; l++){
        for(int r = l; r < 7; r++){
             pecas[i].left_side = l;
