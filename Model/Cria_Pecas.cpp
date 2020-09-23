@@ -11,8 +11,8 @@ typedef struct Pecas
     
 } Peca;
 
-//void cria_pecas()
-int main()
+
+void cria_pecas()
 {
     Peca pecas[28];
     int i = 0;
