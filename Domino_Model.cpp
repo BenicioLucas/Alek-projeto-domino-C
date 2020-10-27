@@ -6,7 +6,7 @@
 #include <ctype.h>
 #include <conio.h>
 #include <time.h>
-
+#include <stdbool.h>
 
 void flush_in();
 
