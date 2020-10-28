@@ -139,19 +139,9 @@ void jogo()
             }
             
         }
-        //printf("\n\n\n\n\n%d do lado de dentro jogador 1", bigger_piece_jog1);
-        //printf("\n[%d|%d]", domino_pecas[bigger_piece_jog1].left_side, domino_pecas[bigger_piece_jog1].right_side);
         
-        //printf("\n\n\n\n\n%d do lado de dentro jogador 2", bigger_piece_jog2);
-        //printf("\n[%d|%d]", domino_pecas[bigger_piece_jog2].left_side, domino_pecas[bigger_piece_jog2].right_side);
-
     }
 
-    //printf("\n\n\n\n\n%d do lado de fora jogador 1", bigger_piece_jog1);
-    //printf("\n[%d|%d]", domino_pecas[bigger_piece_jog1].left_side, domino_pecas[bigger_piece_jog1].right_side);
-
-    //printf("\n\n\n\n\n%d do lado de fora jogador 2", bigger_piece_jog2);
-    //printf("\n[%d|%d]", domino_pecas[bigger_piece_jog2].left_side, domino_pecas[bigger_piece_jog2].right_side);
 
     if(acha_igual_jog1 && acha_igual_jog2)
     {
@@ -201,10 +191,11 @@ void jogo()
                 printf("[%d|%d]\t", domino_pecas[jogador2.indexPecas[i]].left_side, domino_pecas[jogador2.indexPecas[i]].right_side);
             }
         }
-        
+
+        //MOSTRA MESA
 
         printf("\n(1) - Comprar peça");
-        printf("\n(2) - Passar jogada");
+        printf("\n(2) - Comprar peça");
         printf("\n(3) - Sair do jogo");
 
         int escolhe_menu_player;
@@ -214,13 +205,13 @@ void jogo()
         switch (escolhe_menu_player)
         {
             case 1:
-            printf("\ncompra peça");
+            printf("\njogar");
             break;
 
             case 2:
-            printf("\npassa jogada");
+            printf("\ncompra peça");
             break;
-        
+
             case 3:
             printf("\nsai do jogo");
             exit(0);
@@ -230,7 +221,7 @@ void jogo()
         }
 
         }
-        
+
     }
 
 }

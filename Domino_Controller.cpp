@@ -16,7 +16,6 @@ void executaMenu()
         break;
 
         case 6:
-        printf("batata frita com cheddar e bacon");
         exit(0);
     }
 }
