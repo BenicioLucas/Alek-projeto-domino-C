@@ -11,9 +11,12 @@ void jogo()
     
     int index = 0;
     //preenche a array pecas
-    for(int l = 0; l < 7; l++){
-       for(int r = 0; r < 7; r++){
-           if(l<=r){
+    for(int l = 0; l < 7; l++)
+    {
+       for(int r = 0; r < 7; r++)
+       {
+           if(l<=r)
+           {
             domino_pecas[index].left_side = l;
             domino_pecas[index].right_side = r;
             index++;
@@ -46,6 +49,9 @@ void jogo()
         jogador2.indexPecas[i] = randomEmbaralha[i+7];
     }
     
+    int jogador_start;
+    int jogador_next;
+
     //printa pecas jog1
     printf("\nPecas jogador 1:");
     for (int i = 0; i < 7; i++)
@@ -69,8 +75,8 @@ void jogo()
         }
     } 
 
+    bool acha_igual_jog1 = false;
     int bigger_piece_jog1 = '\0';
-    bool sentinela_jog1 = false;
     for (int i = 0; i < 7; i++)
     {
         if(domino_pecas[jogador1.indexPecas[i]].left_side == domino_pecas[jogador1.indexPecas[i]].right_side)
@@ -79,17 +85,14 @@ void jogo()
             {
                 bigger_piece_jog1 = jogador1.indexPecas[i];
             }
+            acha_igual_jog1 = true;
         }    
     }
     
-    if (bigger_piece_jog1 != '\0')
-    {
-        sentinela_jog1 = true;
-    }
     
 
     int bigger_piece_jog2 = '\0';
-    bool sentinela_jog2 = false;
+    bool acha_igual_jog2 = false;
     for (int i = 0; i < 7; i++)
     {
         if(domino_pecas[jogador2.indexPecas[i]].left_side == domino_pecas[jogador2.indexPecas[i]].right_side)
@@ -98,37 +101,82 @@ void jogo()
             {
                 bigger_piece_jog2 = jogador2.indexPecas[i];
             }
+            acha_igual_jog2 = true;
         }    
     }
-    //printf("\n\n\n\n\n%d", bigger_piece_jog2);
-    if (bigger_piece_jog2 != '\0')
-    {
-        sentinela_jog2 = true;
-    }
-    
+
+
     if(bigger_piece_jog1 == '\0' && bigger_piece_jog2 == '\0')
     {
         if((domino_pecas[bigger_piece_jog1].left_side != 0 && domino_pecas[bigger_piece_jog1].right_side != 0) || (domino_pecas[bigger_piece_jog2].left_side != 0 && domino_pecas[bigger_piece_jog1].right_side != 0))
         {
-        for (int i = 0; i < 7; i++)
-        {
+            for (int i = 0; i < 7; i++)
+            {
                 if((domino_pecas[bigger_piece_jog1].left_side + domino_pecas[bigger_piece_jog1].right_side) < (domino_pecas[jogador1.indexPecas[i]].left_side + domino_pecas[jogador1.indexPecas[i]].right_side))
                 {
-                    printf("gay");
+                   bigger_piece_jog1 = jogador1.indexPecas[i];
                 }
             }
+            
+            for (int i = 0; i < 7; i++)
+            {
+                if((domino_pecas[bigger_piece_jog2].left_side + domino_pecas[bigger_piece_jog1].right_side) < (domino_pecas[jogador2.indexPecas[i]].left_side + domino_pecas[jogador2.indexPecas[i]].right_side))
+                {
+                   bigger_piece_jog1 = jogador2.indexPecas[i];
+                }
+            }
+
+            if((domino_pecas[bigger_piece_jog1].left_side + domino_pecas[bigger_piece_jog1].right_side) > (domino_pecas[bigger_piece_jog2].left_side + domino_pecas[bigger_piece_jog2].right_side))
+            {
+                //printf("Player 1 começa");
+                jogador_start = 1;
+                jogador_next = 2;
+            }else
+            {
+                //printf("Player 2 começa");
+                jogador_start = 2;
+                jogador_next = 1;
+            }
+            
         }
-        printf("\n\n\n\n\n%d do lado de dentro jogador 1", bigger_piece_jog1);
-        printf("\n[%d|%d]", domino_pecas[bigger_piece_jog1].left_side, domino_pecas[bigger_piece_jog1].right_side);
+        //printf("\n\n\n\n\n%d do lado de dentro jogador 1", bigger_piece_jog1);
+        //printf("\n[%d|%d]", domino_pecas[bigger_piece_jog1].left_side, domino_pecas[bigger_piece_jog1].right_side);
         
-        printf("\n\n\n\n\n%d do lado de dentro jogador 2", bigger_piece_jog2);
-        printf("\n[%d|%d]", domino_pecas[bigger_piece_jog2].left_side, domino_pecas[bigger_piece_jog2].right_side);
+        //printf("\n\n\n\n\n%d do lado de dentro jogador 2", bigger_piece_jog2);
+        //printf("\n[%d|%d]", domino_pecas[bigger_piece_jog2].left_side, domino_pecas[bigger_piece_jog2].right_side);
 
     }
-    printf("\n\n\n\n\n%d do lado de fora jogador 1", bigger_piece_jog1);
-    printf("\n[%d|%d]", domino_pecas[bigger_piece_jog1].left_side, domino_pecas[bigger_piece_jog1].right_side);
 
-    printf("\n\n\n\n\n%d do lado de fora jogador 2", bigger_piece_jog2);
-    printf("\n[%d|%d]", domino_pecas[bigger_piece_jog2].left_side, domino_pecas[bigger_piece_jog2].right_side);
+    //printf("\n\n\n\n\n%d do lado de fora jogador 1", bigger_piece_jog1);
+    //printf("\n[%d|%d]", domino_pecas[bigger_piece_jog1].left_side, domino_pecas[bigger_piece_jog1].right_side);
+
+    //printf("\n\n\n\n\n%d do lado de fora jogador 2", bigger_piece_jog2);
+    //printf("\n[%d|%d]", domino_pecas[bigger_piece_jog2].left_side, domino_pecas[bigger_piece_jog2].right_side);
+
+    if(acha_igual_jog1 && acha_igual_jog2)
+    {
+        if(domino_pecas[bigger_piece_jog1].left_side > domino_pecas[bigger_piece_jog2].left_side)
+        {
+            printf("Player 1 começa");
+            jogador_start = 1;
+            jogador_next = 2;
+
+        }else
+        {
+            printf("Player 2 começa");
+            jogador_start = 2;
+            jogador_next = 1;
+        }
+    }else if(acha_igual_jog1 && !acha_igual_jog2)
+    {
+        printf("Player 1 começa");
+        jogador_start = 1;
+        jogador_next = 2;
+    }else if(!acha_igual_jog1 && acha_igual_jog2)
+    {
+        printf("Player 2 começa");
+        jogador_start = 2;
+        jogador_next = 1;
+    }
 
 }
