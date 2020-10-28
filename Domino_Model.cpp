@@ -15,7 +15,7 @@ typedef struct Pecas
 {
     int left_side;
     int right_side;
-    char status; 
+    char status;
     int jogador;
 } Peca;
 

@@ -6,21 +6,27 @@ void jogo()
 {
     Peca domino_pecas[28];
 
+    int jogadorPecas1  = 7;
+    int jogadorPecas2  = 7;
+
+    int numera_peca = 1;
+    bool playerOne,playerTwo;
     Jogador jogador1;
     Jogador jogador2;
+   
     
     int index = 0;
     //preenche a array pecas
     for(int l = 0; l < 7; l++)
     {
        for(int r = 0; r < 7; r++)
-       {
-           if(l<=r)
-           {
-            domino_pecas[index].left_side = l;
-            domino_pecas[index].right_side = r;
-            index++;
-           } 
+        {
+            if(l<=r)
+            {
+                domino_pecas[index].left_side = l;
+                domino_pecas[index].right_side = r;
+                index++;
+            } 
         }
     }
 
@@ -51,29 +57,6 @@ void jogo()
     
     int jogador_start;
     int jogador_next;
-
-    //printa pecas jog1
-    printf("\nPecas jogador 1:");
-    for (int i = 0; i < 7; i++)
-    {
-        printf("\n[%d|%d]", domino_pecas[jogador1.indexPecas[i]].left_side, domino_pecas[jogador1.indexPecas[i]].right_side); 
-        printf(" ");
-        if (i%7 == 0 && i != 0)
-        {
-            printf("\n");
-        }
-    }
-    //printa pecas jog2
-    printf("\nPecas jogador 2:");
-    for (int i = 0; i < 7; i++)
-    {
-        printf("\n[%d|%d]", domino_pecas[jogador2.indexPecas[i]].left_side, domino_pecas[jogador2.indexPecas[i]].right_side); 
-        printf(" ");
-        if (i%7 == 0 && i != 0)
-        {
-            printf("\n");
-        }
-    } 
 
     bool acha_igual_jog1 = false;
     int bigger_piece_jog1 = '\0';
@@ -128,12 +111,10 @@ void jogo()
 
             if((domino_pecas[bigger_piece_jog1].left_side + domino_pecas[bigger_piece_jog1].right_side) > (domino_pecas[bigger_piece_jog2].left_side + domino_pecas[bigger_piece_jog2].right_side))
             {
-                //printf("Player 1 começa");
                 jogador_start = 1;
                 jogador_next = 2;
             }else
             {
-                //printf("Player 2 começa");
                 jogador_start = 2;
                 jogador_next = 1;
             }
@@ -170,58 +151,86 @@ void jogo()
     }
 
     bool win_condition = false;
-    while(!win_condition)
+
+    //CRIA MESA
+    char mesa[166];
+
+    do
     {
-        while (jogador_start)
+        do
         {
-        if(jogador_start == 1)
-        {
-            printf("\n\nPECAS JOGADOR 1: \n");
-            for (int i = 0; i < 7; i++)
+            if(jogador_start == 1)
             {
-                printf("\nPECA %d:\t", i);
-                printf("[%d|%d]\t", domino_pecas[jogador1.indexPecas[i]].left_side, domino_pecas[jogador1.indexPecas[i]].right_side);
-            }
-        }else if(jogador_start == 2)
-        {
-            printf("\n\nPECAS JOGADOR 2: \n");
-            for (int i = 0; i < 7; i++)
+                //PRINTA MESA
+                 printf("\nMESA COMECA AQUI[ ");
+                for (int i = 0; i < 166; i++)
+                {
+                    mesa[i] = ' ';
+                    printf("%c", mesa[i]);
+                }
+                printf(" ]TERMINA AQUI\n\n\n");
+
+                //NUMERA PECAS
+                for (int i = 0; i < jogadorPecas1; i++) 
+                {
+                    printf("%d.[%d|%d]\n",numera_peca, domino_pecas[jogador1.indexPecas[i]].left_side, domino_pecas[jogador1.indexPecas[i]].right_side);
+                    numera_peca++;
+                }
+                numera_peca = 1;
+
+            }else if(jogador_start == 2)
             {
-                printf("\nPECA %d:\t", i);
-                printf("[%d|%d]\t", domino_pecas[jogador2.indexPecas[i]].left_side, domino_pecas[jogador2.indexPecas[i]].right_side);
+                printf("\nMESA COMECA AQUI[ ");
+                for (int i = 0; i < 166; i++)
+                {
+                    mesa[i] = ' ';
+                    printf("%c", mesa[i]);
+                }
+                printf(" ]TERMINA AQUI\n");
+
+                for (int i = 0; i < jogadorPecas2 ; i++) 
+                {
+                    printf("%d.[%d|%d]\n",numera_peca, domino_pecas[jogador2.indexPecas[i]].left_side, domino_pecas[jogador2.indexPecas[i]].right_side);
+                    numera_peca++;
+                }
+                numera_peca = 1; 
             }
-        }
+            
+            printf("\n(1) - Jogar");
+            printf("\n(2) - Comprar peça");
+            printf("\n(3) - Sair do jogo");
 
-        //MOSTRA MESA
+            int escolhe_menu_player;
+            printf("\n\nSUA ESCOLHA FOI: \n");
+            scanf("%d", &escolhe_menu_player);
+            flush_in();
+            switch (escolhe_menu_player)
+            {
+                case 1:
+                char peca_jogada;
+                printf("\nEscolha uma peça");
+                scanf("%c", &peca_jogada);
+                flush_in();
+                break;
 
-        printf("\n(1) - Comprar peça");
-        printf("\n(2) - Comprar peça");
-        printf("\n(3) - Sair do jogo");
+                case 2:
+                printf("\ncompra peça");
+                break;
 
-        int escolhe_menu_player;
-        printf("\n\nSUA ESCOLHA FOI: \n");
-        scanf("%d", &escolhe_menu_player);
-        flush_in();
-        switch (escolhe_menu_player)
+                case 3:
+                printf("\nsai do jogo");
+                exit(0);
+            
+                default:
+                break;
+            }
+        }while(jogador_start);
+
+        do
         {
-            case 1:
-            printf("\njogar");
-            break;
+            
+        }while(jogador_next);
 
-            case 2:
-            printf("\ncompra peça");
-            break;
-
-            case 3:
-            printf("\nsai do jogo");
-            exit(0);
+    }while(!win_condition); 
         
-            default:
-            break;
-        }
-
-        }
-
-    }
-
 }
