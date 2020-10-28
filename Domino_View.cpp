@@ -16,7 +16,6 @@ int iniciaMenu()
       
         printf("Domino The Game\n");
         printf("===============\n");
-        // MENU //
         printf("(1) - Iniciar novo jogo\n");
         printf("(2) - Continuar a jogar\n");
         printf("(3) - Salvar jogo\n");

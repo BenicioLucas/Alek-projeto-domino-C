@@ -157,26 +157,80 @@ void jogo()
     {
         if(domino_pecas[bigger_piece_jog1].left_side > domino_pecas[bigger_piece_jog2].left_side)
         {
-            printf("Player 1 começa");
+            printf("\n\nJOGADOR 1 COMEÇA");
             jogador_start = 1;
             jogador_next = 2;
 
         }else
         {
-            printf("Player 2 começa");
+            printf("\n\nJOGADOR 2 COMEÇA");
             jogador_start = 2;
             jogador_next = 1;
         }
     }else if(acha_igual_jog1 && !acha_igual_jog2)
     {
-        printf("Player 1 começa");
         jogador_start = 1;
         jogador_next = 2;
+        printf("\n\nJOGADOR 1 COMEÇA");
     }else if(!acha_igual_jog1 && acha_igual_jog2)
     {
-        printf("Player 2 começa");
         jogador_start = 2;
         jogador_next = 1;
+        printf("\n\nJOGADOR 2 COMEÇA");
+    }
+
+    bool win_condition = false;
+    while(!win_condition)
+    {
+        while (jogador_start)
+        {
+        if(jogador_start == 1)
+        {
+            printf("\n\nPECAS JOGADOR 1: \n");
+            for (int i = 0; i < 7; i++)
+            {
+                printf("\nPECA %d:\t", i);
+                printf("[%d|%d]\t", domino_pecas[jogador1.indexPecas[i]].left_side, domino_pecas[jogador1.indexPecas[i]].right_side);
+            }
+        }else if(jogador_start == 2)
+        {
+            printf("\n\nPECAS JOGADOR 2: \n");
+            for (int i = 0; i < 7; i++)
+            {
+                printf("\nPECA %d:\t", i);
+                printf("[%d|%d]\t", domino_pecas[jogador2.indexPecas[i]].left_side, domino_pecas[jogador2.indexPecas[i]].right_side);
+            }
+        }
+        
+
+        printf("\n(1) - Comprar peça");
+        printf("\n(2) - Passar jogada");
+        printf("\n(3) - Sair do jogo");
+
+        int escolhe_menu_player;
+        printf("\n\nSUA ESCOLHA FOI: \n");
+        scanf("%d", &escolhe_menu_player);
+        flush_in();
+        switch (escolhe_menu_player)
+        {
+            case 1:
+            printf("\ncompra peça");
+            break;
+
+            case 2:
+            printf("\npassa jogada");
+            break;
+        
+            case 3:
+            printf("\nsai do jogo");
+            exit(0);
+        
+            default:
+            break;
+        }
+
+        }
+        
     }
 
 }
