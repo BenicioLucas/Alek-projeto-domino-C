@@ -155,6 +155,8 @@ void jogo()
     //CRIA MESA
     char mesa[166];
 
+    int index_compra = 7;
+    int guarda_compra = 0;
     do
     {
         do
@@ -162,7 +164,7 @@ void jogo()
             if(jogador_start == 1)
             {
                 //PRINTA MESA
-                 printf("\nMESA COMECA AQUI[ ");
+                printf("\nMESA COMECA AQUI[ ");
                 for (int i = 0; i < 166; i++)
                 {
                     mesa[i] = ' ';
@@ -170,13 +172,14 @@ void jogo()
                 }
                 printf(" ]TERMINA AQUI\n\n\n");
 
-                //NUMERA PECAS
-                for (int i = 0; i < jogadorPecas1; i++) 
-                {
-                    printf("%d.[%d|%d]\n",numera_peca, domino_pecas[jogador1.indexPecas[i]].left_side, domino_pecas[jogador1.indexPecas[i]].right_side);
-                    numera_peca++;
-                }
-                numera_peca = 1;
+                linha_175:
+                    //NUMERA PECAS
+                    for (int i = 0; i < jogadorPecas1; i++) 
+                    {
+                        printf("%d.[%d|%d]\n",numera_peca, domino_pecas[jogador1.indexPecas[i]].left_side, domino_pecas[jogador1.indexPecas[i]].right_side);
+                        numera_peca++;
+                    }
+                    numera_peca = 1;
 
             }else if(jogador_start == 2)
             {
@@ -208,13 +211,26 @@ void jogo()
             {
                 case 1:
                 char peca_jogada;
-                printf("\nEscolha uma peça");
+                printf("\nEscolha uma peça:\n");
                 scanf("%c", &peca_jogada);
                 flush_in();
                 break;
 
                 case 2:
-                printf("\ncompra peça");
+                char compra_sn;
+                printf("\n\nDESEJA MESMO COMPRA UMA PECA (S/N): \n");
+                compra_sn = getchar();
+                flush_in();
+                if(toupper(compra_sn) == 'S')
+                {
+                    jogador1.indexPecas[index_compra] = randomEmbaralha[guarda_compra+14];
+                    guarda_compra++;
+                    index_compra++;
+                    jogadorPecas1++;
+
+                    goto linha_175;
+                    
+                }
                 break;
 
                 case 3:
