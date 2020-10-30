@@ -205,7 +205,7 @@ void jogo()
                 int peca_jogada;
                 printf("\nEscolha uma peça:\n");
                 scanf("%d", &peca_jogada);
-                mesa.index_mesa[contador_mesa] =  peca_jogada-1;
+                mesa.index_mesa[contador_mesa] = peca_jogada-1;
                 contador_mesa++;
                 flush_in();
                 break;
