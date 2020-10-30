@@ -29,7 +29,7 @@ typedef struct Jogador
 
 typedef struct Mesa
 {
-    int index_mesa[28];
+    int index_Mesa[28];
 } tipoM;
 
 

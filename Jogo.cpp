@@ -5,11 +5,17 @@
 void jogo()
 {
     Peca domino_pecas[28];
+    int domino_pecasMesa[28];
+
+
+    for (int i = 0; i < 28; i++) {
+        domino_pecasMesa[i] = '\0';
+    }
 
     int jogadorPecas1  = 7;
     int jogadorPecas2  = 7;
 
-    int numera_peca = 1;
+    
     bool playerOne,playerTwo;
     Jogador jogador1;
     Jogador jogador2;
@@ -128,13 +134,13 @@ void jogo()
     {
         if(domino_pecas[bigger_piece_jog1].left_side > domino_pecas[bigger_piece_jog2].left_side)
         {
-            printf("\n\nJOGADOR 1 COMEÇA");
+            printf("\n\nJOGADOR 1 COMEÇA\n");
             jogador_start = 1;
             jogador_next = 2;
 
         }else
         {
-            printf("\n\nJOGADOR 2 COMEÇA");
+            printf("\n\nJOGADOR 2 COMEÇA\n");
             jogador_start = 2;
             jogador_next = 1;
         }
@@ -142,18 +148,23 @@ void jogo()
     {
         jogador_start = 1;
         jogador_next = 2;
-        printf("\n\nJOGADOR 1 COMEÇA");
+        printf("\n\nJOGADOR 1 COMEÇA\n");
     }else if(!acha_igual_jog1 && acha_igual_jog2)
     {
         jogador_start = 2;
         jogador_next = 1;
-        printf("\n\nJOGADOR 2 COMEÇA");
+        printf("\n\nJOGADOR 2 COMEÇA\n");
     }
 
     bool win_condition = false;
+    int jogueimerdanaparede = '\0';
+    int peca_jogada;
 
     //CRIA MESA
     Mesa mesa;
+
+    int pecas_deletadas[28];
+    int contador_deleted = 0;
     int contador_mesa = 0;
     int index_compra = 7;
     int guarda_compra = 0;
@@ -163,21 +174,22 @@ void jogo()
         {
             if(jogador_start == 1)
             {
+
+
                 //PRINTA MESA
                 for (int i = 0; i < contador_mesa; i++)
                 {
-                    printf("[%d|%d]", domino_pecas[jogador1.indexPecas[mesa.index_mesa[i]]].left_side, domino_pecas[jogador1.indexPecas[mesa.index_mesa[i]]].right_side);
+                   printf("\n\n[%d|%d]\n\n", domino_pecas[domino_pecasMesa[i]].left_side, domino_pecas[domino_pecasMesa[i]].right_side);
                 }
 
-                linha_175:
-                
+
+                //printa_peca_add:
                    //NUMERA PECAS
                     for (int i = 0; i < jogadorPecas1; i++) 
                     {
-                        printf("%d.[%d|%d]\n",numera_peca, domino_pecas[jogador1.indexPecas[i]].left_side, domino_pecas[jogador1.indexPecas[i]].right_side);
-                        numera_peca++;
+                        printf("\n%d.[%d|%d]", i, domino_pecas[jogador1.indexPecas[i]].left_side, domino_pecas[jogador1.indexPecas[i]].right_side);
                     }
-                    numera_peca = 1;
+
 
             }else if(jogador_start == 2)
             {
@@ -185,10 +197,8 @@ void jogo()
                 
                 for (int i = 0; i < jogadorPecas2 ; i++) 
                 {
-                    printf("%d.[%d|%d]\n",numera_peca, domino_pecas[jogador2.indexPecas[i]].left_side, domino_pecas[jogador2.indexPecas[i]].right_side);
-                    numera_peca++;
+                    printf("\n[%d|%d]", domino_pecas[jogador2.indexPecas[i]].left_side, domino_pecas[jogador2.indexPecas[i]].right_side);
                 }
-                numera_peca = 1; 
             }
             
             printf("\n(1) - Jogar");
@@ -202,17 +212,26 @@ void jogo()
             switch (escolhe_menu_player)
             {
                 case 1:
-                int peca_jogada;
                 printf("\nEscolha uma peça:\n");
                 scanf("%d", &peca_jogada);
-                mesa.index_mesa[contador_mesa] = peca_jogada-1;
+
+                domino_pecasMesa[contador_mesa] = jogador1.indexPecas[peca_jogada];
+                
+                jogadorPecas1--;
+
+                for(int k = peca_jogada; k < jogadorPecas1; k++){ // Algoritmo que joga todo o array pra esquerda
+                    jogador1.indexPecas[k] = jogador1.indexPecas[k+1];
+                }
+
+              
                 contador_mesa++;
                 flush_in();
+                jogador_start = false;
                 break;
 
                 case 2:
                 char compra_sn;
-                printf("\n\nDESEJA MESMO COMPRA UMA PECA (S/N): \n");
+                printf("\n\nDESEJA MESMO COMPRAR UMA PECA (S/N): \n");
                 compra_sn = getchar();
                 flush_in();
                 if(toupper(compra_sn) == 'S')
@@ -222,8 +241,9 @@ void jogo()
                     index_compra++;
                     jogadorPecas1++;
 
-                    goto linha_175;
-                    
+
+                    //goto printa_peca_add;
+
                 }
                 break;
 
@@ -237,6 +257,7 @@ void jogo()
 
         do
         {
+            printf("Dou a bunda e acho gostoso");
             
         }while(jogador_next);
 
