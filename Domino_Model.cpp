@@ -27,11 +27,10 @@ typedef struct Jogador
 
 } tipoJ;
 
-struct Mesa
+typedef struct Mesa
 {
-    int lado1;
-    int lado2;
-} mesa[28];
+    int index_mesa[28];
+} tipoM;
 
 
 //funcao para limpar opcao

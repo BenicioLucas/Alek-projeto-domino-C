@@ -153,8 +153,8 @@ void jogo()
     bool win_condition = false;
 
     //CRIA MESA
-    char mesa[166];
-
+    Mesa mesa;
+    int contador_mesa = 0;
     int index_compra = 7;
     int guarda_compra = 0;
     do
@@ -164,16 +164,14 @@ void jogo()
             if(jogador_start == 1)
             {
                 //PRINTA MESA
-                printf("\nMESA COMECA AQUI[ ");
-                for (int i = 0; i < 166; i++)
+                for (int i = 0; i < contador_mesa; i++)
                 {
-                    mesa[i] = ' ';
-                    printf("%c", mesa[i]);
+                    printf("[%d|%d]", domino_pecas[jogador1.indexPecas[mesa.index_mesa[i]]].left_side, domino_pecas[jogador1.indexPecas[mesa.index_mesa[i]]].right_side);
                 }
-                printf(" ]TERMINA AQUI\n\n\n");
 
                 linha_175:
-                    //NUMERA PECAS
+                
+                   //NUMERA PECAS
                     for (int i = 0; i < jogadorPecas1; i++) 
                     {
                         printf("%d.[%d|%d]\n",numera_peca, domino_pecas[jogador1.indexPecas[i]].left_side, domino_pecas[jogador1.indexPecas[i]].right_side);
@@ -183,14 +181,8 @@ void jogo()
 
             }else if(jogador_start == 2)
             {
-                printf("\nMESA COMECA AQUI[ ");
-                for (int i = 0; i < 166; i++)
-                {
-                    mesa[i] = ' ';
-                    printf("%c", mesa[i]);
-                }
-                printf(" ]TERMINA AQUI\n");
-
+                
+                
                 for (int i = 0; i < jogadorPecas2 ; i++) 
                 {
                     printf("%d.[%d|%d]\n",numera_peca, domino_pecas[jogador2.indexPecas[i]].left_side, domino_pecas[jogador2.indexPecas[i]].right_side);
@@ -210,9 +202,11 @@ void jogo()
             switch (escolhe_menu_player)
             {
                 case 1:
-                char peca_jogada;
+                int peca_jogada;
                 printf("\nEscolha uma peça:\n");
-                scanf("%c", &peca_jogada);
+                scanf("%d", &peca_jogada);
+                mesa.index_mesa[contador_mesa] =  peca_jogada-1;
+                contador_mesa++;
                 flush_in();
                 break;
 
@@ -234,8 +228,7 @@ void jogo()
                 break;
 
                 case 3:
-                printf("\nsai do jogo");
-                exit(0);
+                exit(1);
             
                 default:
                 break;
