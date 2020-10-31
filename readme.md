@@ -16,4 +16,3 @@
 * **Enzo Maneira** - [Enzo Maneira](https://github.com/enzomaneira)
 * **Lucas Benicio** - [Lucas Benicio](https://github.com/BenicioLucas)
 * **Karen Nascimento** - [Karen Nascimento](https://github.com/karendev1)
-
