@@ -24,7 +24,6 @@ Peca pecas[28];
 typedef struct Jogador
 {
     int indexPecas[28];
-
 } tipoJ;
 
 typedef struct Mesa
@@ -34,7 +33,8 @@ typedef struct Mesa
 
 
 //funcao para limpar opcao
-void flush_in(){ 
+void flush_in()
+{ 
     int ch;
     while((ch = fgetc(stdin)) != EOF && ch != '\n'){} 
 }

@@ -15,7 +15,7 @@ void executaMenu()
         jogo();
         break;
 
-        case 6:
+        case 2:
         exit(0);
     }
 }
