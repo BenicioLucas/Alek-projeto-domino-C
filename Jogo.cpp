@@ -7,8 +7,10 @@ void jogo()
     Peca domino_pecas[28];
     int domino_pecasMesa[28];
     int sougay = 0;
-    int variavel_primatoide_eu_sou_bem_gay_etc_e_viadokk = 0;
+    int j = 0;
 
+    char resp_inv;
+    char resp_inv2;
 
     for (int i = 0; i < 28; i++) {
         domino_pecasMesa[i] = '\0';
@@ -211,9 +213,40 @@ void jogo()
             {
                 case 1:
                 printf("\nJOG 1 - Escolha uma peça:\n");
-                scanf("%d", &peca_jogada);
+                scanf("%d", &peca_jogada);        
+                flush_in();
+                printf("Você deseja inverter a peça?\n");
+                scanf("%c", &resp_inv2);
+            
+                if(toupper(resp_inv2) == 'S')
+                {
+                    int peca_temporaria;
+                    domino_pecasMesa[contador_mesa] = jogador1.indexPecas[peca_jogada];
 
-                domino_pecasMesa[contador_mesa] = jogador1.indexPecas[peca_jogada];
+                    //printf("tentando inverter -> %d|%d", domino_pecas[domino_pecasMesa[contador_mesa]].left_side, domino_pecas[domino_pecasMesa[contador_mesa]].right_side);
+
+                    peca_temporaria = domino_pecas[domino_pecasMesa[contador_mesa]].right_side;
+
+                    domino_pecas[domino_pecasMesa[contador_mesa]].right_side = domino_pecas[domino_pecasMesa[contador_mesa]].left_side;
+                    domino_pecas[domino_pecasMesa[contador_mesa]].left_side  = peca_temporaria;
+                }else
+                {
+                    domino_pecasMesa[contador_mesa] = jogador1.indexPecas[peca_jogada];
+                }
+
+                if (contador_mesa > 0)
+                {
+                        printf("peça anterior: [%d|%d]\n",domino_pecas[domino_pecasMesa[contador_mesa - 1]].left_side, domino_pecas[domino_pecasMesa[contador_mesa - 1]].right_side);
+                        printf("peça atual que estou jogando: [%d|%d]\n", domino_pecas[jogador1.indexPecas[peca_jogada]].left_side, domino_pecas[jogador1.indexPecas[peca_jogada]].right_side);
+
+                    if (domino_pecas[domino_pecasMesa[contador_mesa - 1]].right_side == domino_pecas[jogador1.indexPecas[peca_jogada]].left_side)
+                    {
+                        printf("estou fazendo jogada valida\n");
+                    }else
+                    {
+                        printf("estou fazendo jogada invalida\n");
+                    }
+                }
                 
                 jogadorPecas1--;
 
@@ -227,7 +260,7 @@ void jogo()
                 flush_in();
                 
                 jogador_start = 0;
-                variavel_primatoide_eu_sou_bem_gay_etc_e_viadokk = 1;
+                j = 1;
                 break;
 
                 case 2:
@@ -257,7 +290,7 @@ void jogo()
         do
         {   
             jogador2:
-                if (jogador_next == 1 || variavel_primatoide_eu_sou_bem_gay_etc_e_viadokk == 1){
+                if (jogador_next == 1 || j == 1){
                     for (int i = 0; i < contador_mesa; i++)
                     {
                     printf("\n\n[%d|%d]\n\n", domino_pecas[domino_pecasMesa[i]].left_side, domino_pecas[domino_pecasMesa[i]].right_side);
@@ -279,13 +312,45 @@ void jogo()
                     case 1:
                     printf("\nJOG 2 - Escolha uma peça:\n");
                     scanf("%d", &peca_jogada);
+                    flush_in();
 
+                    printf("Você deseja inverter a peça?");
+                    scanf("%c", &resp_inv);
+
+                if(toupper(resp_inv) == 'S')
+                {
+    
+                    int peca_temporaria2;
                     domino_pecasMesa[contador_mesa] = jogador2.indexPecas[peca_jogada];
+
+                    //printf("tentando inverter -> %d|%d", domino_pecas[domino_pecasMesa[contador_mesa]].left_side, domino_pecas[domino_pecasMesa[contador_mesa]].right_side);
+
+                    peca_temporaria2 = domino_pecas[domino_pecasMesa[contador_mesa]].right_side;
+
+                    domino_pecas[domino_pecasMesa[contador_mesa]].right_side = domino_pecas[domino_pecasMesa[contador_mesa]].left_side;
+                    domino_pecas[domino_pecasMesa[contador_mesa]].left_side  = peca_temporaria2;
+                }else
+                {
+                    domino_pecasMesa[contador_mesa] = jogador2.indexPecas[peca_jogada];
+                }
+
+
+                    if (contador_mesa > 0){
+                        printf("peça anterior: [%d|%d]",domino_pecas[domino_pecasMesa[contador_mesa - 1]].left_side, domino_pecas[domino_pecasMesa[contador_mesa - 1]].right_side);
+                        printf("peça atual que estou jogando: [%d|%d]", domino_pecas[jogador2.indexPecas[peca_jogada]].left_side, domino_pecas[jogador2.indexPecas[peca_jogada]].right_side);
+
+                        if (domino_pecas[domino_pecasMesa[contador_mesa - 1]].right_side == domino_pecas[jogador2.indexPecas[peca_jogada]].left_side){
+                            printf("jogada valida");
+                        }
+                        else{
+                            printf("jogada invalida");
+                        }
+                    }
                     
                     jogadorPecas2--;
 
                     for(int k = peca_jogada; k < jogadorPecas2; k++)
-                    { // Algoritmo que joga todo o array pra esquerda
+                    {   //Algoritmo que joga todo o array pra esquerda
                         jogador2.indexPecas[k] = jogador2.indexPecas[k+1];
                     }
 
