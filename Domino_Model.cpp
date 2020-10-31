@@ -15,15 +15,14 @@ typedef struct Pecas
 {
     int left_side;
     int right_side;
-    char status;
+    int status;
     int jogador;
 } Peca;
-
-Peca pecas[28];
 
 typedef struct Jogador
 {
     int indexPecas[28];
+    bool status[28];
 } tipoJ;
 
 typedef struct Mesa

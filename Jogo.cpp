@@ -6,7 +6,6 @@ void jogo()
 {
     Peca domino_pecas[28];
     int domino_pecasMesa[28];
-    int sougay = 0;
     int j = 0;
 
     char resp_inv;
@@ -14,6 +13,7 @@ void jogo()
 
     for (int i = 0; i < 28; i++) {
         domino_pecasMesa[i] = '\0';
+        domino_pecas[i].status = 0;
     }
 
     int jogadorPecas1  = 7;
@@ -56,13 +56,16 @@ void jogo()
 
     //atribui pecas jog1
     for (int i = 0; i < 7; i++)
-    {
+    {       
         jogador1.indexPecas[i] = randomEmbaralha[i];
+        domino_pecas[jogador1.indexPecas[i]].status = 1;
     }
+
     //atribui pecas jog2
     for (int i = 0; i < 7; i++)
     {
         jogador2.indexPecas[i] = randomEmbaralha[i+7];
+        domino_pecas[jogador2.indexPecas[i]].status = 1;
     }
     
     int jogador_start;
@@ -81,10 +84,6 @@ void jogo()
             acha_igual_jog1 = true;
         }    
     }
-
-    int guarda_compra2;
-    
-    
 
     int bigger_piece_jog2 = '\0';
     bool acha_igual_jog2 = false;
@@ -163,7 +162,6 @@ void jogo()
     }
 
     bool win_condition = false;
-    int jogueimerdanaparede = '\0';
     int peca_jogada;
 
     //CRIA MESA
@@ -171,24 +169,25 @@ void jogo()
     int contador_deleted = 0;
     int contador_mesa = 0;
     int index_compra = 7;
-    int guarda_compra = 0;
-
     int index_compra2 = 7;
+
     do
     {
         do
         {
             if(jogador_start == 1)
             {
+                printf("==================================================================================================================================\n");
+                printf("MESA:\n");
                 //PRINTA MESA
                 for (int i = 0; i < contador_mesa; i++)
                 {
-                   printf("\n\n[%d|%d]\n\n", domino_pecas[domino_pecasMesa[i]].left_side, domino_pecas[domino_pecasMesa[i]].right_side);
+                   printf("[%d|%d] ", domino_pecas[domino_pecasMesa[i]].left_side, domino_pecas[domino_pecasMesa[i]].right_side);
                 }
-
+                printf("\n==================================================================================================================================");
                 //printa_peca_add:
                 //NUMERA PECAS
-                printf("PRINTANDO O PINTO DA PEÇA JOGADOR 1");
+                printf("\nPRINTANDO PECAS DO JOGADOR 1:");
                 for (int i = 0; i < jogadorPecas1; i++) 
                 {
                     printf("\n%d.[%d|%d]", i, domino_pecas[jogador1.indexPecas[i]].left_side, domino_pecas[jogador1.indexPecas[i]].right_side);
@@ -201,9 +200,9 @@ void jogo()
                 goto jogador2;
             }
             
-            printf("\n(1) - Jogar");
-            printf("\n(2) - Comprar peça");
-            printf("\n(3) - Sair do jogo");
+            printf("\n(1) - JOGAR");
+            printf("\n(2) - COMPRAR PECA");
+            printf("\n(3) - SAIR DO JOGO");
 
             int escolhe_menu_player1;
             printf("\n\nJOG1 - SUA ESCOLHA FOI: \n");
@@ -212,10 +211,10 @@ void jogo()
             switch (escolhe_menu_player1)
             {
                 case 1:
-                printf("\nJOG 1 - Escolha uma peça:\n");
+                printf("\nJOG 1 - ESCOLHA UMA PECA:\n");
                 scanf("%d", &peca_jogada);        
                 flush_in();
-                printf("Você deseja inverter a peça?\n");
+                printf("\nVOCE DESEJA INVERTER A PECA?\n");
                 scanf("%c", &resp_inv2);
             
                 if(toupper(resp_inv2) == 'S')
@@ -254,7 +253,7 @@ void jogo()
                         break;
                     }else
                     {
-                        printf("jogada INVALIDA");
+                        printf("\n\nJOGADA INVALIDA\n\n");
                         continue;
                     }
                 }else{
@@ -283,12 +282,26 @@ void jogo()
                 flush_in();
                 if(toupper(compra_sn) == 'S')
                 {
-                    jogador1.indexPecas[index_compra] = randomEmbaralha[guarda_compra+14];
-                    guarda_compra++;
-                    index_compra++;
-                    jogadorPecas1++;
-                    //goto printa_peca_add;
-
+                    for (int k = 0; k < 28; k++)
+                    {
+                        // printf("peça que vou comprar - > %d|%d\n",domino_pecas[randomEmbaralha[k]].left_side,domino_pecas[randomEmbaralha[k]].right_side);
+                        // printf("Status da peça que vou comprar -> %d ", domino_pecas[randomEmbaralha[k]].status);
+                        
+                        if(domino_pecas[randomEmbaralha[k]].status == 0)
+                        {
+                            jogador1.indexPecas[index_compra] = randomEmbaralha[k];
+                            domino_pecas[randomEmbaralha[k]].status = 1;
+                            index_compra++;
+                            jogadorPecas1++;
+                            
+                            break;
+                        } else if (k == 27)
+                        {
+                            printf("\nSEM PECAS DISPONIVEI PARA COMPRA!");
+                        }   
+                        
+                    }
+                    
                 }
                 break;
 
@@ -303,31 +316,37 @@ void jogo()
         do
         {   
             jogador2:
-                if (jogador_next == 1 || j == 1){
+                if (jogador_next == 1 || j == 1)
+                printf("==================================================================================================================================\n");
+                printf("MESA:\n");
+                {
                     for (int i = 0; i < contador_mesa; i++)
                     {
-                    printf("\n\n[%d|%d]\n\n", domino_pecas[domino_pecasMesa[i]].left_side, domino_pecas[domino_pecasMesa[i]].right_side);
+                    printf("[%d|%d] ", domino_pecas[domino_pecasMesa[i]].left_side, domino_pecas[domino_pecasMesa[i]].right_side);
                     }
-
-                    printf("PRINTANDO AS PEÇAS JOGADOR 2");
+                    printf("\n==================================================================================================================================");
+                    printf("\nPRINTANDO AS PEÇAS DO JOGADOR 2:");
                     for (int i = 0; i < jogadorPecas2 ; i++) 
                     {
                         printf("\n%d.[%d|%d]", i, domino_pecas[jogador2.indexPecas[i]].left_side, domino_pecas[jogador2.indexPecas[i]].right_side);
                     }
-
+                    
 
                 int escolhe_menu_player2;
+                printf("\n(1) - JOGAR");
+                printf("\n(2) - COMPRAR PECA");
+                printf("\n(3) - SAIR DO JOGO");
                 printf("\n\nJOG2 - SUA ESCOLHA FOI: \n");
                 scanf("%d", &escolhe_menu_player2);
                 flush_in();
                 switch (escolhe_menu_player2)
                 {
                     case 1:
-                    printf("\nJOG 2 - Escolha uma peça:\n");
+                    printf("\nJOG 2 - ESCOLHA UMA PECA:\n");
                     scanf("%d", &peca_jogada);
                     flush_in();
 
-                    printf("Você deseja inverter a peça?\n");
+                    printf("\nVOCE DESEJA INVERTER A PECA?\n");
                     scanf("%c", &resp_inv);
 
                     if(toupper(resp_inv) == 'S')
@@ -350,9 +369,6 @@ void jogo()
 
                     if (contador_mesa > 0)
                     {
-                        printf("peça anterior: [%d|%d]",domino_pecas[domino_pecasMesa[contador_mesa - 1]].left_side, domino_pecas[domino_pecasMesa[contador_mesa - 1]].right_side);
-                        printf("peça atual que estou jogando: [%d|%d]", domino_pecas[jogador2.indexPecas[peca_jogada]].left_side, domino_pecas[jogador2.indexPecas[peca_jogada]].right_side);
-
                         if (domino_pecas[domino_pecasMesa[contador_mesa - 1]].right_side == domino_pecas[jogador2.indexPecas[peca_jogada]].left_side)
                         {
                             jogadorPecas2--;
@@ -364,14 +380,13 @@ void jogo()
 
                             contador_mesa++;
 
-                            
                             jogador_next = 0;
                             jogador_start = 1;
                             break;
                         }
                         else 
                         {
-                            printf("jogada invalida");
+                            printf("\n\nJOGADA INVALIDA\n\n");
                             continue;
                         }
                     }else
@@ -400,12 +415,33 @@ void jogo()
                         flush_in();
                         if(toupper(compra_sn) == 'S')
                         {
-                            jogador2.indexPecas[index_compra2] = randomEmbaralha[guarda_compra2+21];
-                            guarda_compra2++;
-                            index_compra2++;
-                            jogadorPecas2++;
-                            //goto printa_peca_add;
+                            for (int k = 0; k < 28; k++)
+                            {
+                                // printf("peça que vou comprar - > %d|%d\n",domino_pecas[randomEmbaralha[k]].left_side,domino_pecas[randomEmbaralha[k]].right_side);
+                                // printf("Status da peça que vou comprar -> %d ", domino_pecas[randomEmbaralha[k]].status);
+                                
+                                if(domino_pecas[randomEmbaralha[k]].status == 0)
+                                {
+                                    jogador2.indexPecas[index_compra2] = randomEmbaralha[k];
+                                    domino_pecas[randomEmbaralha[k]].status = 1;
+                                    index_compra2++;
+                                    jogadorPecas2++;
+                                    //goto printa_peca_add;
+                                    
+                                    break;
+                                } else if (k == 27)
+                                {
+                                    printf("\n\nSEM PECAS DISPONIVEI PARA COMPRA!");
+                                }   
+                        
+                            }
                         }
+                        break;
+
+                        case 3:
+                        exit(1);
+                        break;
+
                     break;
                 }
             }
