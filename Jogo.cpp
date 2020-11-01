@@ -8,6 +8,8 @@ void jogo()
     int domino_pecasMesa[28];
     int j = 0;
 
+    char deseja_inv;
+
     char resp_inv;
     char resp_inv2;
 
@@ -214,62 +216,133 @@ void jogo()
                 printf("\nJOG 1 - ESCOLHA UMA PECA:\n");
                 scanf("%d", &peca_jogada);        
                 flush_in();
+
+                printf("\nESQUERDA OU DIREITA?\n");
+                scanf("%c", &deseja_inv);
+                flush_in();
+
                 printf("\nVOCE DESEJA INVERTER A PECA?\n");
                 scanf("%c", &resp_inv2);
             
                 if(toupper(resp_inv2) == 'S')
                 {
-                    int peca_temporaria;
-                    domino_pecasMesa[contador_mesa] = jogador1.indexPecas[peca_jogada];
+                    if(toupper(deseja_inv) == 'E' )
+                    {
+                        int peca_temporaria;
+                        domino_pecasMesa[contador_mesa] = jogador1.indexPecas[peca_jogada];
 
-                    //printf("tentando inverter -> %d|%d", domino_pecas[domino_pecasMesa[contador_mesa]].left_side, domino_pecas[domino_pecasMesa[contador_mesa]].right_side);
+                        //printf("tentando inverter -> %d|%d", domino_pecas[domino_pecasMesa[contador_mesa]].left_side, domino_pecas[domino_pecasMesa[contador_mesa]].right_side);
 
-                    peca_temporaria = domino_pecas[domino_pecasMesa[contador_mesa]].right_side;
+                        peca_temporaria = domino_pecas[domino_pecasMesa[contador_mesa]].right_side;
 
-                    domino_pecas[domino_pecasMesa[contador_mesa]].right_side = domino_pecas[domino_pecasMesa[contador_mesa]].left_side;
-                    domino_pecas[domino_pecasMesa[contador_mesa]].left_side  = peca_temporaria;
+                        domino_pecas[domino_pecasMesa[contador_mesa]].right_side = domino_pecas[domino_pecasMesa[contador_mesa]].left_side;
+                        domino_pecas[domino_pecasMesa[contador_mesa]].left_side  = peca_temporaria;
+ 
+                        for (int c = 26 ; c >= 0 ; c--){
+                        domino_pecasMesa[c+1] = domino_pecasMesa[c];
+                        }
+                        domino_pecasMesa[0] = jogador1.indexPecas[peca_jogada];
+
+
+
+                    }else
+                    {
+                        int peca_temporaria;
+                        domino_pecasMesa[contador_mesa] = jogador1.indexPecas[peca_jogada];
+
+                        //printf("tentando inverter -> %d|%d", domino_pecas[domino_pecasMesa[contador_mesa]].left_side, domino_pecas[domino_pecasMesa[contador_mesa]].right_side);
+
+                        peca_temporaria = domino_pecas[domino_pecasMesa[contador_mesa]].right_side;
+
+                        domino_pecas[domino_pecasMesa[contador_mesa]].right_side = domino_pecas[domino_pecasMesa[contador_mesa]].left_side;
+                        domino_pecas[domino_pecasMesa[contador_mesa]].left_side  = peca_temporaria;
+                    
+                    }
+
                 }else
                 {
-                    domino_pecasMesa[contador_mesa] = jogador1.indexPecas[peca_jogada];
+                    // Joga a peça
+                    if(toupper(deseja_inv) == 'E' )
+                    {
+ 
+                        for (int c = 26 ; c >= 0 ; c--)
+                        {
+                            domino_pecasMesa[c+1] = domino_pecasMesa[c];
+                        }
+                        domino_pecasMesa[0] = jogador1.indexPecas[peca_jogada];
+                    
+                    }else
+                    {
+                        domino_pecasMesa[contador_mesa] = jogador1.indexPecas[peca_jogada];
+                    }
                 }
-                flush_in();
 
                 if (contador_mesa > 0)
                 {
-                       
-                    if (domino_pecas[domino_pecasMesa[contador_mesa - 1]].right_side == domino_pecas[jogador1.indexPecas[peca_jogada]].left_side)
+                    if(toupper(deseja_inv) == 'E' )
                     {
-                        jogadorPecas1--;
 
-                        for(int k = peca_jogada; k < jogadorPecas1; k++)
-                        { // Algoritmo que joga todo o array pra esquerda
-                            jogador1.indexPecas[k] = jogador1.indexPecas[k+1];
+                        if(domino_pecas[domino_pecasMesa[1]].left_side == domino_pecas[jogador1.indexPecas[peca_jogada]].right_side)
+                        {
+                            jogadorPecas1--;
+
+                            for(int k = peca_jogada; k < jogadorPecas1; k++)
+                            { // Algoritmo que joga todo o array pra esquerda
+                                jogador1.indexPecas[k] = jogador1.indexPecas[k+1];
+                            }
+
+                            contador_mesa++;
+                    
+                            jogador_start = 0;
+                            j = 1;
+                            break;
+
+                        }else
+                        {
+                            printf("\n\nJOGADA INVALIDA\n\n");
+                            continue;
                         }
 
-                        contador_mesa++;
-                
-                        jogador_start = 0;
-                        j = 1;
-                        break;
                     }else
                     {
-                        printf("\n\nJOGADA INVALIDA\n\n");
-                        continue;
-                    }
-                }else{
-                                
-                        jogadorPecas1--;
 
-                        for(int k = peca_jogada; k < jogadorPecas1; k++)
-                        { // Algoritmo que joga todo o array pra esquerda
+
+                        if (domino_pecas[domino_pecasMesa[contador_mesa - 1]].right_side == domino_pecas[jogador1.indexPecas[peca_jogada]].left_side)
+                        {
+                            jogadorPecas1--;
+
+                            for(int k = peca_jogada; k < jogadorPecas1; k++)
+                            { // Algoritmo que joga todo o array pra esquerda
                             jogador1.indexPecas[k] = jogador1.indexPecas[k+1];
+                            }
+
+                            contador_mesa++;
+                
+                            jogador_start = 0;
+                            j = 1;
+                            break;
+                        }else
+                        {
+                            printf("\n\nJOGADA INVALIDA\n\n");
+                            continue;
                         }
 
-                        contador_mesa++;
+                    }
+                }else
+                {
+                                
+                    jogadorPecas1--;
+
+                    for(int k = peca_jogada; k < jogadorPecas1; k++)
+                    { // Algoritmo que joga todo o array pra esquerda
+                        jogador1.indexPecas[k] = jogador1.indexPecas[k+1];
+                    }
+
+                    contador_mesa++;
                 
-                        jogador_start = 0;
-                        j = 1;
-                        break;
+                    jogador_start = 0;
+                    j = 1;
+                    break;
 
                 }
                 
@@ -346,48 +419,133 @@ void jogo()
                     scanf("%d", &peca_jogada);
                     flush_in();
 
+                    printf("\nESQUERDA OU DIREITA?\n");
+                    scanf("%c", &deseja_inv);
+                    flush_in();
+
                     printf("\nVOCE DESEJA INVERTER A PECA?\n");
                     scanf("%c", &resp_inv);
 
                     if(toupper(resp_inv) == 'S')
                     {
+                        if(toupper(deseja_inv) == 'E' )
+                        {
+                            int peca_temporaria2;
+                            for (int c = 26 ; c >= 0 ; c--)
+                            {
+                            domino_pecasMesa[c+1] = domino_pecasMesa[c];
+                            }
+                            domino_pecasMesa[0] = jogador2.indexPecas[peca_jogada];
+
+
+                            //printf("tentando inverter -> %d|%d", domino_pecas[domino_pecasMesa[contador_mesa]].left_side, domino_pecas[domino_pecasMesa[contador_mesa]].right_side);
+
+                            peca_temporaria2 = domino_pecas[domino_pecasMesa[0]].right_side;
+
+                            domino_pecas[domino_pecasMesa[0]].right_side = domino_pecas[domino_pecasMesa[0]].left_side;
+                            domino_pecas[domino_pecasMesa[0]].left_side  = peca_temporaria2;
+                        
+                        }else
+                        {
+
+                            int peca_temporaria2;
+                            domino_pecasMesa[contador_mesa] = jogador2.indexPecas[peca_jogada];
+
+                            //printf("tentando inverter -> %d|%d", domino_pecas[domino_pecasMesa[contador_mesa]].left_side, domino_pecas[domino_pecasMesa[contador_mesa]].right_side);
+
+                            peca_temporaria2 = domino_pecas[domino_pecasMesa[contador_mesa]].right_side;
+
+                            domino_pecas[domino_pecasMesa[contador_mesa]].right_side = domino_pecas[domino_pecasMesa[contador_mesa]].left_side;
+                            domino_pecas[domino_pecasMesa[contador_mesa]].left_side  = peca_temporaria2;
+                        }
     
-                        int peca_temporaria2;
-                        domino_pecasMesa[contador_mesa] = jogador2.indexPecas[peca_jogada];
 
-                        //printf("tentando inverter -> %d|%d", domino_pecas[domino_pecasMesa[contador_mesa]].left_side, domino_pecas[domino_pecasMesa[contador_mesa]].right_side);
-
-                        peca_temporaria2 = domino_pecas[domino_pecasMesa[contador_mesa]].right_side;
-
-                        domino_pecas[domino_pecasMesa[contador_mesa]].right_side = domino_pecas[domino_pecasMesa[contador_mesa]].left_side;
-                        domino_pecas[domino_pecasMesa[contador_mesa]].left_side  = peca_temporaria2;
                     }else
                     {
-                        domino_pecasMesa[contador_mesa] = jogador2.indexPecas[peca_jogada];
+                        if(toupper(deseja_inv) == 'E' )
+                        {
+                            for (int c = 28 ; c >= 0 ; c--)
+                            {
+                                domino_pecasMesa[c+1] = domino_pecasMesa[c];
+                        
+                            }
+                            domino_pecasMesa[0] = jogador2.indexPecas[peca_jogada];
+                        }else
+                        {
+                            domino_pecasMesa[contador_mesa] = jogador2.indexPecas[peca_jogada];
+                        }
+                      
                     }
 
 
                     if (contador_mesa > 0)
                     {
-                        if (domino_pecas[domino_pecasMesa[contador_mesa - 1]].right_side == domino_pecas[jogador2.indexPecas[peca_jogada]].left_side)
+                        if(toupper(deseja_inv) == 'E')
                         {
-                            jogadorPecas2--;
+                            /*
+                            if (toupper(resp_inv) == 'S'){
+                                if(domino_pecas[domino_pecasMesa[1]].left_side == domino_pecas[jogador2.indexPecas[peca_jogada]].left_side){
+                                jogadorPecas2--;
 
-                            for(int k = peca_jogada; k < jogadorPecas2; k++)
-                            {   //Algoritmo que joga todo o array pra esquerda
-                                jogador2.indexPecas[k] = jogador2.indexPecas[k+1];
+                                for(int k = peca_jogada; k < jogadorPecas2; k++)
+                                {   //Algoritmo que joga todo o array pra esquerda
+                                    jogador2.indexPecas[k] = jogador2.indexPecas[k+1];
+                                }
+
+                                contador_mesa++;
+                                jogador_next = 0;
+                                jogador_start = 1;
+                                break;
+                            }else{
+                                printf("JOGADA INVALIDA");
+                                continue;
                             }
 
-                            contador_mesa++;
+                            }else{
+                                */
 
-                            jogador_next = 0;
-                            jogador_start = 1;
-                            break;
-                        }
-                        else 
+                            
+                            if(domino_pecas[domino_pecasMesa[1]].left_side == domino_pecas[jogador2.indexPecas[peca_jogada]].right_side)
+                            {
+                                jogadorPecas2--;
+
+                                for(int k = peca_jogada; k < jogadorPecas2; k++)
+                                {   //Algoritmo que joga todo o array pra esquerda
+                                    jogador2.indexPecas[k] = jogador2.indexPecas[k+1];
+                                }
+
+                                contador_mesa++;
+                                jogador_next = 0;
+                                jogador_start = 1;
+                                break;
+                            }else{
+                                printf("JOGADA INVALIDA");
+                                continue;
+                            }
+                          //  
+                        }else
                         {
-                            printf("\n\nJOGADA INVALIDA\n\n");
-                            continue;
+
+                            if (domino_pecas[domino_pecasMesa[contador_mesa - 1]].right_side == domino_pecas[jogador2.indexPecas[peca_jogada]].left_side)
+                            {
+                                jogadorPecas2--;
+
+                                for(int k = peca_jogada; k < jogadorPecas2; k++)
+                                {   //Algoritmo que joga todo o array pra esquerda
+                                jogador2.indexPecas[k] = jogador2.indexPecas[k+1];
+                                }
+
+                                contador_mesa++;
+
+                                jogador_next = 0;
+                                jogador_start = 1;
+                                break;
+                            }
+                            else 
+                            {
+                                printf("\n\nJOGADA INVALIDA\n\n");
+                                continue;
+                            }
                         }
                     }else
                         {
@@ -410,7 +568,7 @@ void jogo()
 
                         case 2:
                         char compra_sn;
-                        printf("\n\nJOG 2 - DESEJA MESMO COMPRAR UMA PECA (S/N): \n");
+                        printf("\n\nJOG 2 - DESEJA MESMO COMPRAR UMA PECA? (S/N): \n");
                         compra_sn = getchar();
                         flush_in();
                         if(toupper(compra_sn) == 'S')
@@ -431,7 +589,7 @@ void jogo()
                                     break;
                                 } else if (k == 27)
                                 {
-                                    printf("\n\nSEM PECAS DISPONIVEI PARA COMPRA!");
+                                    printf("\n\nSEM PECAS DISPONIVEIS PARA COMPRA!");
                                 }   
                         
                             }

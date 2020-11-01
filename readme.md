@@ -16,3 +16,7 @@
 * **Enzo Maneira** - [Enzo Maneira](https://github.com/enzomaneira)
 * **Lucas Benicio** - [Lucas Benicio](https://github.com/BenicioLucas)
 * **Karen Nascimento** - [Karen Nascimento](https://github.com/karendev1)
+
+# Coautores
+* **Antonio Mello Babo** - [Antonio Mello](https://github.com/melloTonio)
+* **Stefano Giordano** - [Stefano Giordano](https://github.com/Giordano26)
