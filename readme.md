@@ -9,7 +9,7 @@
 </p>
 
 # Rodando 
-<p> Apenas rodar o executavel do jogo </p>
+<p> Jogo Funcional </p>
 
 # Autores
 * **Alexandre Jozala** - [Alexandre Jozala](https://github.com/alejozala0)
